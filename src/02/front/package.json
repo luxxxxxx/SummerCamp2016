@@ -1,0 +1,26 @@
+{
+  "name": "node-test",
+  "version": "1.0.0",
+  "description": "a node.js project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^0.20.0",
+    "request": "^2.74.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.11.4",
+    "babel-preset-es2015": "^6.9.0"
+  }
+}
+
+/*
+  dependencies 项目运行所需模块 ( --save
+  devDependencies 项目开发所需模块 ( --save-dev
+  
+  npm install 会根据这两项来下载本项目的 node_modules
+*/

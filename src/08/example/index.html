@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            padding: 50px;
+        }
+        .myCanvas {
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="300" height="200" class="myCanvas"></canvas>
+    <img src="./test.png" id="myImage">
+</body>
+    <script type="text/javascript">
+        (function () {
+            var canvas = document.querySelector("#myCanvas");
+            var ctx = canvas.getContext("2d");
+            var img = document.querySelector("#myImage");
+
+            ctx.beginPath();
+            ctx.lineWidth = "1";
+            ctx.strokeStyle = "#000";
+            ctx.moveTo(60, 0);
+            ctx.lineTo(60, 200);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.lineWidth = "1";
+            ctx.strokeStyle = "#000";
+            ctx.moveTo(0, 60);
+            ctx.lineTo(200, 60);
+            ctx.stroke();
+
+            // ctx.rotate(1);
+            // ctx.drawImage(img, -20, -20);
+            
+            
+            var deg = 0.1;
+
+            var t = window.setInterval(function () {
+                ctx.save();
+                ctx.translate(60, 60);
+                ctx.rotate(deg);
+                ctx.drawImage(img, -20, -20);
+                ctx.restore();
+                deg += 0.1;     
+            }, 1000/60);
+
+        })();
+    </script>
+</html>

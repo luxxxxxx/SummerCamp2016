@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Demo</title>
+</head>
+<body>
+	<p>  
+		<label>请选择一个文件：</label>  
+		<input type="file" id="file" />  
+		<input type="button" value="读取图像" onclick="readAsDataURL()" />  
+		<input type="button" value="读取二进制数据" onclick="readAsBinaryString()" />  
+		<input type="button" value="读取文本文件" onclick="readAsText()" />  
+	</p>  
+	<div id="result" name="result"></div> 
+</body>
+<script type="text/javascript">  
+	var result=document.getElementById("result");  
+	var file=document.getElementById("file");  
+
+//判断浏览器是否支持FileReader接口  
+if(typeof FileReader == 'undefined'){  
+	result.InnerHTML="<p>你的浏览器不支持FileReader接口！</p>";  
+    //使选择控件不可操作  
+    file.setAttribute("disabled","disabled");  
+}  
+
+function readAsDataURL(){  
+    //检验是否为图像文件  
+    var file = document.getElementById("file").files[0];  
+    if(!/image\/\w+/.test(file.type)){  
+    	alert("看清楚，这个需要图片！");  
+    	return false;  
+    }  
+    var reader = new FileReader();  
+    //将文件以Data URL形式读入页面  
+    reader.readAsDataURL(file);  
+    reader.onload=function(e){  
+    	var resultURL = e.target.result;
+    	
+    	var image = new Image();  
+        image.src = resultURL;
+    	image.onload = function(){ 
+        //创建一个image对象，给canvas绘制使用  
+        	var cvs = document.createElement('canvas');  
+        	var scale = 1;    
+        	if(this.width > 1000 || this.height > 1000){  
+        //1000只是示例，可以根据具体的要求去设定    
+            	if(this.width > this.height){    
+                	scale = 1000 / this.width;  
+            	}else{    
+                	scale = 1000 / this.height;    
+            	}    
+        	}  
+		    cvs.width = this.width*scale;    
+		    cvs.height = this.height*scale;    
+		    //计算等比缩小后图片宽高  
+		    var ctx = cvs.getContext('2d');    
+		    ctx.drawImage(this, 0, 0, cvs.width, cvs.height);     
+		    newImageData = cvs.toDataURL(file.type, 0.5); 
+			console.log(resultURL.length,newImageData.length);
+			var result=document.getElementById("result");  
+		    //显示文件  
+		    result.innerHTML='<img src="' + newImageData +'" alt="" />';  
+    	}
+    }  
+}  
+
+function readAsBinaryString(){  
+	var file = document.getElementById("file").files[0];  
+	var reader = new FileReader();  
+    //将文件以二进制形式读入页面  
+    reader.readAsBinaryString(file);  
+    reader.onload=function(f){  
+    	var result=document.getElementById("result");  
+        //显示文件  
+        result.innerHTML=this.result;  
+    }  
+}  
+
+function readAsText(){  
+	var file = document.getElementById("file").files[0];  
+	var reader = new FileReader();  
+    //将文件以文本形式读入页面  
+    reader.readAsText(file);  
+    reader.onload=function(f){  
+    	var result=document.getElementById("result");  
+        //显示文件  
+        result.innerHTML=this.result;  
+    }  
+}  
+</script>  
+</html>

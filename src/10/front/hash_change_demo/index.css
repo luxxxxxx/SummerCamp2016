@@ -1,0 +1,21 @@
+body {
+  color: red;
+  padding-top: 100px;
+}
+.container {
+  width: 500px;
+  height: 600px;
+  background-color: #ccc
+}
+
+#hello {
+  width: 250px;
+  height: 250px;
+  background-color: #123456;
+}
+
+#mdzz {
+  width: 250px;
+  height: 250px;
+  background-color: #654321;
+}
